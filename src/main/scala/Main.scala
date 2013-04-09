@@ -33,6 +33,7 @@ object Main extends App {
   def sendIncremented(incomingInt: Int) {
     val intToSend = incomingInt + 1
     val serializedInt = intToSend.toString()
+    println(s"Got $incomingInt, sending $intToSend")
     val length = serializedInt.length
     writer.write(serializedInt, 0, length)
     writer.write('\n')
