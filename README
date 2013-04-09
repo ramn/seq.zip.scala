@@ -7,7 +7,7 @@ sbt run sourceip sourceport destip destport
 Example use case:
 
 1. Set up receiving server with
-nc -l 801
+nc -l 8011
 
 2. Run our app with
 sbt run localhost 8010 localhost 8011
