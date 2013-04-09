@@ -4,6 +4,7 @@ import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.OutputStreamWriter
 import java.net.InetSocketAddress
+import java.net.ServerSocket
 
 object Main extends App {
   val arguments = args.toList
@@ -14,8 +15,9 @@ object Main extends App {
   val sourceAddress = new InetSocketAddress(sourceIp, sourcePort)
   val destAddress = new InetSocketAddress(destIp, destPort)
 
-  val readSock = new Socket
-  readSock.bind(sourceAddress)
+  val serverSocket = new ServerSocket
+  serverSocket.bind(sourceAddress)
+  val readSock = serverSocket.accept
 
   val writeSock = new Socket
   val timeoutMillis = 10000
@@ -26,11 +28,11 @@ object Main extends App {
 
   def nextInt: Int = {
     val line = reader.readLine
-    val parsedInt = Integer.parseInt(line)
+    val parsedInt = line.toInt
     parsedInt
   }
 
-  def sendIncremented(incomingInt: Int) {
+  def sendIncremented(incomingInt: Int): Unit = {
     val intToSend = incomingInt + 1
     val serializedInt = intToSend.toString()
     println(s"Got $incomingInt, sending $intToSend")
