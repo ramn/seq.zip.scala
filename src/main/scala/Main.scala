@@ -3,13 +3,22 @@ import java.io.InputStreamReader
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.OutputStreamWriter
+import java.net.InetSocketAddress
 
 object Main extends App {
   val arguments = args.toList
-  val sourceIp :: sourcePort :: destIp :: destPort :: Nil = arguments
+  val sourceIp :: sourcePortStr :: destIp :: destPortStr :: Nil = arguments
+  val sourcePort = Integer.parseInt(sourcePortStr)
+  val destPort = Integer.parseInt(destPortStr)
 
-  val readSock = new Socket(sourceIp, Integer.parseInt(sourcePort))
-  val writeSock = new Socket(destIp, Integer.parseInt(destPort))
+  val sourceAddress = new InetSocketAddress(sourceIp, sourcePort)
+  val destAddress = new InetSocketAddress(destIp, destPort)
+
+  val readSock = new Socket
+  readSock.bind(sourceAddress)
+
+  val writeSock = new Socket
+  writeSock.connect(destAddress, 1000)
 
   val reader = new BufferedReader(new InputStreamReader(readSock.getInputStream))
   val writer = new OutputStreamWriter(writeSock.getOutputStream)
