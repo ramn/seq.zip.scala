@@ -5,8 +5,11 @@ import java.io.BufferedWriter
 import java.io.OutputStreamWriter
 
 object Main extends App {
-  val readSock = new Socket("localhost", 8000)
-  val writeSock = new Socket("localhost", 8001)
+  val arguments = args.toList
+  val sourceIp :: sourcePort :: destIp :: destPort :: Nil = arguments
+
+  val readSock = new Socket("localhost", Integer.parseInt(sourcePort))
+  val writeSock = new Socket("localhost", Integer.parseInt(destPort))
 
   val reader = new BufferedReader(new InputStreamReader(readSock.getInputStream))
   val writer = new OutputStreamWriter(writeSock.getOutputStream)
