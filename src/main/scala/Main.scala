@@ -18,7 +18,8 @@ object Main extends App {
   readSock.bind(sourceAddress)
 
   val writeSock = new Socket
-  writeSock.connect(destAddress, 1000)
+  val timeoutMillis = 10000
+  writeSock.connect(destAddress, timeoutMillis)
 
   val reader = new BufferedReader(new InputStreamReader(readSock.getInputStream))
   val writer = new OutputStreamWriter(writeSock.getOutputStream)
